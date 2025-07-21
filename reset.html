@@ -1,0 +1,44 @@
+<!-- Puedes guardar esto como reset.html y subirlo a GitHub Pages -->
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar contraseña</title>
+</head>
+
+<body>
+    <h2>🔐 Cambiar contraseña</h2>
+    <form id="resetForm">
+        <label for="password">Nueva contraseña:</label><br />
+        <input type="password" id="password" required /><br />
+        <button type="submit">Cambiar contraseña</button>
+    </form>
+    <p id="message"></p>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const token = params.get("token"); // Captura el token de la URL
+
+        document.getElementById("resetForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const newPassword = document.getElementById("password").value;
+
+            const response = await fetch("https://backendautogas-main-production.up.railway.app/auth/reset-password", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    token: token,
+                    newPassword: newPassword,
+                }),
+            });
+
+            const data = await response.json();
+            document.getElementById("message").textContent = data.message || "✅ Contraseña cambiada.";
+        });
+    </script>
+</body>
+
+</html>
