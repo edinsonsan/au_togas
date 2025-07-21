@@ -1,20 +1,67 @@
-<!-- Puedes guardar esto como reset.html y subirlo a GitHub Pages -->
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recuperar contraseña</title>
+    <!-- Enlace a Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f4f6f9;
+        }
+
+        .reset-container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #5d5d5d;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .message {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 1.2em;
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 
 <body>
-    <h2>🔐 Cambiar contraseña</h2>
-    <form id="resetForm">
-        <label for="password">Nueva contraseña:</label><br />
-        <input type="password" id="password" required /><br />
-        <button type="submit">Cambiar contraseña</button>
-    </form>
-    <p id="message"></p>
+
+    <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="reset-container">
+            <h2>🔐 Cambiar contraseña</h2>
+            <form id="resetForm">
+                <div class="mb-3">
+                    <label for="password" class="form-label">Nueva contraseña:</label>
+                    <input type="password" id="password" class="form-control" required />
+                </div>
+                <button type="submit" class="btn btn-custom w-100">Cambiar contraseña</button>
+            </form>
+            <p id="message" class="message"></p>
+        </div>
+    </div>
 
     <script>
         const params = new URLSearchParams(window.location.search);
@@ -25,7 +72,7 @@
             const newPassword = document.getElementById("password").value;
 
             const response = await fetch("https://backendautogas-main-production.up.railway.app/auth/reset-password", {
-                method: "POST",
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -39,6 +86,11 @@
             document.getElementById("message").textContent = data.message || "✅ Contraseña cambiada.";
         });
     </script>
+
+    <!-- Enlace a Bootstrap JS y Popper (opcional para componentes interactivos) -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+
 </body>
 
 </html>
